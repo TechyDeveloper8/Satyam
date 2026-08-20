@@ -1,0 +1,27 @@
+{
+  "name": "aether-store-mern",
+  "version": "1.0.0",
+  "description": "Production-quality Greyish-White Glassmorphic MERN E-Commerce Application",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build:client": "npm run build --prefix client",
+    "seed": "node server/utils/seeder.js"
+  },
+  "keywords": [
+    "mern",
+    "react",
+    "express",
+    "mongodb",
+    "ecommerce",
+    "glassmorphism"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dependencies": "^0.0.1"
+  }
+}
