@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
-  timeout: 5000,
+  baseURL: import.meta.env.VITE_API_URL || 'https://satyam-qhyp.onrender.com/api',
+  timeout: 10000,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -10,7 +10,7 @@ const API = axios.create({
 
 API.interceptors.request.use(
   (config) => {
-    const user = localStorage.getItem('aether_user');
+    const user = localStorage.getItem('satyam_user') || localStorage.getItem('aether_user');
     if (user) {
       const parsed = JSON.parse(user);
       if (parsed.token) {
