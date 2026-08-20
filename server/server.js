@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'development') {
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'online',
-    system: 'Aether Glassmorphism E-Commerce API',
+    system: 'Satyam Market Glassmorphism E-Commerce API',
     timestamp: new Date().toISOString()
   });
 });
@@ -39,9 +39,18 @@ app.use('/api/search', require('./routes/searchRoutes'));
 app.use('/api/coupons', require('./routes/couponRoutes'));
 app.use('/api/reviews', require('./routes/reviewRoutes'));
 
-// Error handling middleware
-app.use(notFound);
-app.use(errorHandler);
+const path = require('path');
+
+// Serve frontend static assets in production mode
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'));
+  });
+} else {
+  app.use(notFound);
+  app.use(errorHandler);
+}
 
 const PORT = process.env.PORT || 5000;
 
