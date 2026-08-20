@@ -39,14 +39,28 @@ app.use('/api/search', require('./routes/searchRoutes'));
 app.use('/api/coupons', require('./routes/couponRoutes'));
 app.use('/api/reviews', require('./routes/reviewRoutes'));
 
+const fs = require('fs');
 const path = require('path');
 
-// Serve frontend static assets in production mode
+// Serve frontend static assets in production mode if dist exists
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/dist')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'));
-  });
+  const distPath = path.resolve(__dirname, '../client/dist');
+  const indexPath = path.resolve(distPath, 'index.html');
+
+  if (fs.existsSync(indexPath)) {
+    app.use(express.static(distPath));
+    app.get('*', (req, res) => {
+      res.sendFile(indexPath);
+    });
+  } else {
+    app.get('/', (req, res) => {
+      res.json({
+        status: 'online',
+        system: 'Satyam Market Glassmorphism E-Commerce API',
+        message: 'Satyam Market API online. Live catalog at /api/products'
+      });
+    });
+  }
 } else {
   app.use(notFound);
   app.use(errorHandler);
