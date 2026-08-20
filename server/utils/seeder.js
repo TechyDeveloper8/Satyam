@@ -5,7 +5,7 @@ const Category = require('../models/Category');
 const Coupon = require('../models/Coupon');
 const User = require('../models/User');
 
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: require('path').resolve(__dirname, '../.env') });
 
 const categoriesData = [
   { name: 'Audio & Acoustics', slug: 'audio-acoustics', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80', description: 'Studio grade wireless headphones and audiophile gear.', order: 1 },
@@ -190,14 +190,14 @@ const productsData = [
 ];
 
 const couponsData = [
-  { code: 'AETHER10', discountPercentage: 10, maxDiscount: 100, minOrderValue: 50, isActive: true },
+  { code: 'SATYAM10', discountPercentage: 10, maxDiscount: 100, minOrderValue: 50, isActive: true },
   { code: 'GLASS20', discountPercentage: 20, maxDiscount: 200, minOrderValue: 150, isActive: true },
   { code: 'WELCOME15', discountPercentage: 15, maxDiscount: 150, minOrderValue: 0, isActive: true }
 ];
 
 const seedDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/aether_ecommerce');
+    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/satyam_market_ecommerce');
     console.log('Clearing existing data...');
     await Product.deleteMany({});
     await Category.deleteMany({});
